@@ -1,39 +1,38 @@
 ﻿using WebUtilities.Interfaces;
 using WebUtilities.Model;
 
-namespace WebUtilities.Services
+namespace WebUtilities.Services;
+
+public class OperationResultBuilder<T> : IOperationResultBuilder<T> where T : OperationResult, new()
 {
-    public class OperationResultBuilder<T> : IOperationResultBuilder<T> where T : OperationResult, new()
+    private readonly T operationResult = new();
+
+    public IOperationResultBuilder<T> AddMessage(string message)
     {
-        private T operationResult = new();
-        public Interfaces.IOperationResultBuilder<T> AddMessage(string message)
-        {
-            operationResult.Messages.Add(message);
-            return this;
-        }
+        operationResult.Messages.Add(message);
+        return this;
+    }
 
-        public Interfaces.IOperationResultBuilder<T> AddMessages(IEnumerable<string> messages)
-        {
-            operationResult.Messages.AddRange(messages);
-            return this;
-        }
+    public IOperationResultBuilder<T> AddMessages(IEnumerable<string> messages)
+    {
+        operationResult.Messages.AddRange(messages);
+        return this;
+    }
 
-        public T Build()
-        {
-            return operationResult;
-        }
+    public T Build()
+    {
+        return operationResult;
+    }
 
-        public Interfaces.IOperationResultBuilder<T> SetFailureStatus()
-        {
-            operationResult.Status = OperationStatus.Failed;
-            return this;
+    public IOperationResultBuilder<T> SetFailureStatus()
+    {
+        operationResult.Status = OperationStatus.Failed;
+        return this;
+    }
 
-        }
-
-        public Interfaces.IOperationResultBuilder<T> SetSuccessStatus()
-        {
-            operationResult.Status = OperationStatus.Success;
-            return this;
-        }
+    public IOperationResultBuilder<T> SetSuccessStatus()
+    {
+        operationResult.Status = OperationStatus.Success;
+        return this;
     }
 }
