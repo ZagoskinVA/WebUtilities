@@ -8,14 +8,11 @@ public enum ValidationStatus
 
 public class ValidationResult
 {
-    public ValidationStatus Status { get; }
-    public IEnumerable<string> ErrorMessages { get; }
-
-    public ValidationResult(ValidationStatus status): this(status, Array.Empty<string>())
+    public ValidationResult(ValidationStatus status) : this(status, Array.Empty<string>())
     {
     }
-    
-    public ValidationResult(ValidationStatus status, string errorMessage): this(status, new string[] {errorMessage})
+
+    public ValidationResult(ValidationStatus status, string errorMessage) : this(status, new[] {errorMessage})
     {
     }
 
@@ -24,4 +21,7 @@ public class ValidationResult
         Status = status;
         ErrorMessages = errorMessages;
     }
+
+    public ValidationStatus Status { get; }
+    public IEnumerable<string> ErrorMessages { get; }
 }
