@@ -8,7 +8,8 @@ public class Repository<T> : IRepository<T> where T : BaseObject
 {
     public async Task CreateAsync(DbContext context, T entity)
     {
-        entity.Id = Guid.NewGuid().ToString();
+        if(string.IsNullOrEmpty(entity.Id))
+            entity.Id = Guid.NewGuid().ToString();
         context.Add(entity);
         await context.SaveChangesAsync();
     }
