@@ -6,7 +6,7 @@ namespace WebUtilities.Model;
 [Index(nameof(Id), IsUnique = true)]
 public class BaseObject
 {
-    [Key] public string Id { get; set; }
+    [Key] public string? Id { get; set; }
 
     public bool IsDeleted { get; set; }
 }

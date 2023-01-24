@@ -10,6 +10,7 @@ public class Repository<T> : IRepository<T> where T : BaseObject
     {
         if(string.IsNullOrEmpty(entity.Id))
             entity.Id = Guid.NewGuid().ToString();
+
         context.Add(entity);
         await context.SaveChangesAsync();
     }
@@ -17,18 +18,18 @@ public class Repository<T> : IRepository<T> where T : BaseObject
     public async Task DeleteAsync(DbContext context, T entity)
     {
         entity.IsDeleted = false;
-        context.Update(entity);
-        await context.SaveChangesAsync();
+        
+        await UpdateAsync(context, entity);
     }
 
     public IQueryable<T> GetAll(DbContext context)
     {
-        return context.Set<T>().AsQueryable<T>();
+        return context.Set<T>().AsQueryable<T>().AsNoTracking();
     }
 
     public async Task UpdateAsync(DbContext context, T entity)
     {
-        context.Update(entity);
+        context.Entry(entity).State = EntityState.Modified;
         await context.SaveChangesAsync();
     }
 }
